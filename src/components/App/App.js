@@ -1,10 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
-import R from 'ramda'
 
 import grassUrl from './grass.png'
-
-const propToUnit = prop => R.pipe(R.prop(prop), R.multiply(20))
+import propToUnit from '../../utils/propToUnit'
+import {WORLD_SIZE} from '../../constants'
 
 const Content = styled.main`
   display: flex;
@@ -35,9 +34,7 @@ const Debug = styled.pre`
 
 const Component = () => (
   <Content>
-    <World height="20" width="20">
-      Snake!
-    </World>
+    <World height={WORLD_SIZE} width={WORLD_SIZE}/>
     
     <Debug>
       <h6>Render's state</h6>
