@@ -1,9 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import grassUrl from './grass.png'
-import propToUnit from '../../utils/propToUnit'
-import {WORLD_SIZE} from '../../constants'
+import Field from '../Field'
 
 const Content = styled.main`
   display: flex;
@@ -13,14 +11,7 @@ const Content = styled.main`
   min-height: 100vh;
 `
 
-const World = styled.div`
-  background-image: url(${grassUrl});
-  background-repeat: repeat;
-  height: ${propToUnit('height')}px;
-  width: ${propToUnit('width')}px;
-`
-
-const Debug = styled.pre`
+const DebugBox = styled.pre`
   background-color: yellow;
   color: brown;
   border: 0.1em solid;
@@ -32,16 +23,20 @@ const Debug = styled.pre`
   }
 `
 
-const Component = () => (
-  <Content>
-    <World height={WORLD_SIZE} width={WORLD_SIZE}/>
-    
-    <Debug>
-      <h6>Render's state</h6>
-      
-      {JSON.stringify({}, null, 2)}
-    </Debug>
-  </Content>
-)
+const Component = class extends React.Component {
+  render() {
+    return (
+      <Content>
+        <Field />
+        
+        <DebugBox>
+          <h6>Render's state</h6>
+          
+          {JSON.stringify({}, null, 2)}
+        </DebugBox>
+      </Content>
+    )
+  }
+}
 
 export default Component
