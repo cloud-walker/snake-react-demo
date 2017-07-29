@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import DebugBox from '../DebugBox'
-import Field from '../Field'
+import DebugBox from 'components/DebugBox'
+import Field from 'components/Field'
 
 const Content = styled.main`
   display: flex;

@@ -1,8 +1,8 @@
 import React from 'react'
 import R from 'ramda'
 
-import {WORLD_SIZE} from '../../constants'
-import Grass from '../Grass'
+import {WORLD_SIZE} from 'constants'
+import Grass from 'components/Grass'
 import getFoodCandidate from './getFoodCandidate'
 
 const iReduceToObj = R.addIndex(R.reduce)(R.__, {})
