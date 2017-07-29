@@ -2,7 +2,6 @@ import React from 'react'
 import R from 'ramda'
 
 import {WORLD_SIZE} from '../../constants'
-import Grass from 'components/Grass'
 import getFoodCandidate from './getFoodCandidate'
 
 const iReduceToObj = R.addIndex(R.reduce)(R.__, {})
@@ -12,6 +11,8 @@ const grid = Array(WORLD_SIZE).fill(
 )
 
 const Component = class extends React.Component {
+  static displayName = 'Game'
+  
   constructor() {
     super()
     
@@ -52,12 +53,12 @@ const Component = class extends React.Component {
   }
   
   render() {
-    return (
-      <Grass 
-        height={WORLD_SIZE} 
-        width={WORLD_SIZE}
-      />
-    )
+    const {cells, snake, food} = this.state
+    
+    return this.props.children({
+      snake: snake.map(i => cells[i]),
+      food: cells[food],
+    })
   }
 }
 

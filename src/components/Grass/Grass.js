@@ -6,8 +6,7 @@ import propToUnit from 'utils/propToUnit'
 export default styled.div`
   background-image: url(${grassUrl});
   background-repeat: repeat;
-  height: ${propToUnit('height')}px;
-  width: ${propToUnit('width')}px;
-  border: .1em solid green;
-  border-radius: .25em;
+  height: ${propToUnit('size')}px;
+  width: ${propToUnit('size')}px;
+  position: relative;
 `

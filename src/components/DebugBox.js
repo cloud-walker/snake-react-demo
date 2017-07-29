@@ -6,8 +6,4 @@ export default styled.pre`
   border: .1em solid;
   padding: .5em .5rem;
   font-weight: bold;
-  
-  h6 {
-    margin: 0;
-  }
 `
