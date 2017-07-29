@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import DebugBox from '../DebugBox'
 import Field from '../Field'
 
 const Content = styled.main`
@@ -9,18 +10,6 @@ const Content = styled.main`
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-`
-
-const DebugBox = styled.pre`
-  background-color: yellow;
-  color: brown;
-  border: 0.1em solid;
-  padding: 0.5em;
-  font-weight: bold;
-  
-  h6 {
-    margin: 0;
-  }
 `
 
 const Component = class extends React.Component {
