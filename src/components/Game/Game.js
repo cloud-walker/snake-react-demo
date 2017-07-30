@@ -65,10 +65,6 @@ const Component = class extends React.Component {
     requestAnimationFrame(this.frame)
   }
 
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   return true
-  // }
-
   componentDidUpdate(prevProps, prevState) {
     console.log('asdad', this.props)
     switch (this.props.lastKey) {
