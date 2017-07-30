@@ -3,6 +3,7 @@ import R from 'ramda'
 
 import {WORLD_SIZE} from '../../constants'
 import getFoodCandidate from './getFoodCandidate'
+import controls from 'hocs/controls'
 
 const iReduceToObj = R.addIndex(R.reduce)(R.__, {})
 
@@ -29,10 +30,13 @@ const cells = R.pipe(
 const snake = ['0.0', '0.1']
 const food = getFoodCandidate(cells)
 
+const enhance = controls
+
 const Component = class extends React.Component {
   static displayName = 'Game'
 
   frames = 0
+  direction = 'right'
 
   get snakeCells() {
     const {snake, cells} = this.state
@@ -56,10 +60,46 @@ const Component = class extends React.Component {
       cells,
       snake,
       food,
-      direction: 'right',
     }
 
     requestAnimationFrame(this.frame)
+  }
+
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   return true
+  // }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log('asdad', this.props)
+    switch (this.props.lastKey) {
+      case 'ArrowLeft': {
+        if (!['right', 'left'].includes(this.direction)) {
+          this.direction = 'left'
+        }
+        break
+      }
+      case 'ArrowRight': {
+        if (!['right', 'left'].includes(this.direction)) {
+          this.direction = 'right'
+        }
+        break
+      }
+      case 'ArrowDown': {
+        if (!['up', 'down'].includes(this.direction)) {
+          this.direction = 'bottom'
+        }
+        break
+      }
+      case 'ArrowUp': {
+        if (!['up', 'down'].includes(this.direction)) {
+          this.direction = 'top'
+        }
+        break
+      }
+      default: {
+        this.direction = 'right'
+      }
+    }
   }
 
   getNextPosition(id) {
@@ -68,7 +108,7 @@ const Component = class extends React.Component {
       R.map(Number),
     )(id)
 
-    switch (this.state.direction) {
+    switch (this.direction) {
       case 'right': {
         const nextX = x + 1 <= this.worldLimit ? x + 1 : 0
         return `${y}.${nextX}`
@@ -81,10 +121,9 @@ const Component = class extends React.Component {
       case 'top': {
         const nextY = y - 1 < 0 ? this.worldLimit : y - 1
 
-        return `${x}.${nextY}`
+        return `${nextY}.${x}`
       }
-      case 'bottom':
-      default: {
+      case 'bottom': {
         const nextY = y + 1 > this.worldLimit ? 0 : y + 1
 
         return `${nextY}.${x}`
@@ -97,6 +136,8 @@ const Component = class extends React.Component {
     const tail = R.head(this.snakeCells)
 
     const nextCell = this.state.cells[this.getNextPosition(head.id)]
+
+    console.log('nextCell', nextCell)
 
     const nextState = {
       snake: R.pipe(
@@ -118,7 +159,7 @@ const Component = class extends React.Component {
   frame() {
     this.frames++
 
-    if (this.frames === 30) {
+    if (this.frames === 15) {
       this.frames = 0
       this.moveSnake()
     }
@@ -134,4 +175,4 @@ const Component = class extends React.Component {
   }
 }
 
-export default Component
+export default enhance(Component)
