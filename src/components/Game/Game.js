@@ -32,6 +32,8 @@ const food = getFoodCandidate(cells)
 const Component = class extends React.Component {
   static displayName = 'Game'
 
+  frames = 0
+
   get snakeCells() {
     const {snake, cells} = this.state
 
@@ -114,10 +116,10 @@ const Component = class extends React.Component {
   }
 
   frame() {
-    this.acc++
+    this.frames++
 
-    if (this.acc === 30) {
-      this.acc = 0
+    if (this.frames === 30) {
+      this.frames = 0
       this.moveSnake()
     }
 
