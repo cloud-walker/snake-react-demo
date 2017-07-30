@@ -28,7 +28,7 @@ const cells = R.pipe(
 )(grid)
 
 const snake = ['0.0', '0.1']
-const food = getFoodCandidate(cells)
+const food = getFoodCandidate(snake, cells)
 
 const enhance = controls
 
@@ -39,13 +39,11 @@ const Component = class extends React.Component {
   direction = 'right'
 
   get snakeCells() {
-    const {snake, cells} = this.state
-
-    return snake.map(i => cells[i])
+    return this.state.snake.map(i => cells[i])
   }
 
   get foodCell() {
-    return this.state.cells[this.state.food]
+    return cells[this.state.food]
   }
 
   get worldLimit() {
@@ -57,7 +55,6 @@ const Component = class extends React.Component {
     this.frame = this.frame.bind(this)
 
     this.state = {
-      cells,
       snake,
       food,
     }
@@ -81,13 +78,13 @@ const Component = class extends React.Component {
         break
       }
       case 'ArrowDown': {
-        if (!['up', 'down'].includes(this.direction)) {
+        if (!['top', 'bottom'].includes(this.direction)) {
           this.direction = 'bottom'
         }
         break
       }
       case 'ArrowUp': {
-        if (!['up', 'down'].includes(this.direction)) {
+        if (!['top', 'bottom'].includes(this.direction)) {
           this.direction = 'top'
         }
         break
@@ -131,19 +128,33 @@ const Component = class extends React.Component {
     const head = R.last(this.snakeCells)
     const tail = R.head(this.snakeCells)
 
-    const nextCell = this.state.cells[this.getNextPosition(head.id)]
+    const nextCell = cells[this.getNextPosition(head.id)]
 
-    console.log('nextCell', nextCell)
+    if (R.contains(nextCell.id)(this.state.snake)) {
+      this.setState({
+        gameOver: true,
+      })
+      return
+    }
+
+    if (nextCell.id === this.foodCell.id) {
+      const snake = R.append(nextCell.id)(this.state.snake)
+      const food = getFoodCandidate(snake, cells)
+
+      const nextState = {
+        snake,
+        food,
+      }
+
+      this.setState(nextState)
+      return
+    }
 
     const nextState = {
       snake: R.pipe(
         R.tail,
         R.append(nextCell.id),
       )(this.state.snake),
-      cells: R.pipe(
-        R.set(R.lensProp(nextCell.id), nextCell),
-        R.over(R.lensProp(tail.id), R.dissoc('occupied'))
-      )(this.state.cells),
     }
 
     /**
@@ -167,6 +178,7 @@ const Component = class extends React.Component {
     return this.props.children({
       snake: this.snakeCells,
       food: this.foodCell,
+      gameOver: this.state.gameOver,
     })
   }
 }

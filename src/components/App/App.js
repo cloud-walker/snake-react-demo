@@ -8,10 +8,10 @@ import propToUnit from 'utils/propToUnit'
 
 const Content = styled.main`
   display: flex;
-  align-items: center;
   justify-content: space-around;
   min-height: 100vh;
   background-color: #333;
+  padding-top: 10vh;
 `
 
 const SnakeFrag = styled.div`
@@ -31,18 +31,23 @@ const Component = class extends React.Component {
   render() {
     return (
       <Game>
-        {({snake, food}) => (
+        {({snake, food, gameOver}) => (
           <Content>
-            <Grass key={0} size={20}>
-              {snake.map(snake =>
-                <SnakeFrag 
-                  key={snake.id}
-                  {...snake}
-                />
-              )}
-              <Food {...food}/>
-            </Grass>
-            
+            {!!gameOver
+              ? <h1>game over!</h1>
+              : (
+                <Grass key={0} size={20}>
+                  {snake.map(snake =>
+                    <SnakeFrag
+                      key={snake.id}
+                      {...snake}
+                    />
+                  )}
+                  <Food {...food}/>
+                </Grass>
+              )
+            }
+
             <DebugBox key={1}>
               <h3>Render's state</h3>
 
