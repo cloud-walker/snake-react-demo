@@ -6,4 +6,5 @@ export default styled.pre`
   border: .1em solid;
   padding: .5em .5rem;
   font-weight: bold;
+  min-width: 250px;
 `
