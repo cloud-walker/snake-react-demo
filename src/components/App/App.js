@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import DebugBox from 'components/DebugBox'
 import Game from 'components/Game'
 import Grass from 'components/Grass'
-import propToUnit from 'utils/propToUnit'
+import SnakeFrag from 'components/SnakeFrag'
 
 const Content = styled.main`
   display: flex;
@@ -12,15 +12,6 @@ const Content = styled.main`
   min-height: 100vh;
   background-color: #333;
   padding-top: 10vh;
-`
-
-const SnakeFrag = styled.div`
-  background-color: black;
-  width: 20px;
-  height: 20px;
-  position: absolute;
-  top: ${propToUnit('y')}px;
-  left: ${propToUnit('x')}px;
 `
 
 const Food = styled(SnakeFrag)`

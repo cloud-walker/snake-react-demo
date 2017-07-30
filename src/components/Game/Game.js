@@ -63,7 +63,6 @@ const Component = class extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log('asdad', this.props)
     switch (this.props.lastKey) {
       case 'ArrowLeft': {
         if (!['right', 'left'].includes(this.direction)) {
@@ -121,12 +120,14 @@ const Component = class extends React.Component {
 
         return `${nextY}.${x}`
       }
+      default: {
+        throw new Error('direction got an invalid value')
+      }
     }
   }
 
   moveSnake() {
     const head = R.last(this.snakeCells)
-    const tail = R.head(this.snakeCells)
 
     const nextCell = cells[this.getNextPosition(head.id)]
 
